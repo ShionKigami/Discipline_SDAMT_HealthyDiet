@@ -1,0 +1,40 @@
+backend/
+├── src/
+│   ├── config/
+│   │   ├── env.ts                      # Переменные окружения (Supabase keys)
+│   │   └── database.ts                 # Подключение к PostgreSQL
+│   │
+│   ├── controllers/
+│   │   ├── authController.ts           # Регистрация/вход (S.01)
+│   │   ├── syncController.ts           # Приём и отдача данных синхронизации (RL.02)
+│   │   ├── socialController.ts         # Публикация и получение рецептов (Соц. лента)
+│   │   └── productController.ts        # Глобальная база продуктов (F.05.02)
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.ts
+│   │   ├── syncRoutes.ts
+│   │   ├── socialRoutes.ts
+│   │   └── productRoutes.ts
+│   │
+│   ├── services/
+│   │   ├── authService.ts              # Хэширование паролей (bcrypt)
+│   │   ├── syncService.ts              # Разрешение конфликтов синхронизации
+│   │   └── socialService.ts            # Логика публикации рецептов
+│   │
+│   ├── models/                         # ORM-модели (Prisma)
+│   │   ├── User.ts
+│   │   ├── Recipe.ts                   # Публичные рецепты (общая база)
+│   │   ├── Product.ts                  # Глобальная база продуктов (расширенная)
+│   │   └── DiaryEntry.ts               # Для облачного бэкапа дневника (S.03)
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.ts           # Проверка JWT
+│   │   └── validateRequest.ts          # Валидация входящих данных
+│   │
+│   └── index.ts                        # Точка входа (Express.js)
+│
+├── prisma/
+│   └── schema.prisma                   # Схема базы данных PostgreSQL
+│
+├── package.json
+└── tsconfig.json

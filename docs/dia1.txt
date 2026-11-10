@@ -1,0 +1,119 @@
+mobile/
+├── src/
+│   ├── app/
+│   │   ├── App.tsx                     # Корневой компонент приложения
+│   │   ├── providers/
+│   │   │   ├── DatabaseProvider.tsx    # Инициализация WatermelonDB
+│   │   │   ├── AuthProvider.tsx        # Контекст авторизации (S.01)
+│   │   │   └── SyncProvider.tsx        # Фоновый процесс синхронизации (RL.02)
+│   │   └── store/
+│   │       └── index.ts                # Настройка глобального стейта (Zustand/Redux)
+│   │
+│   ├── navigation/
+│   │   ├── RootNavigator.tsx           # Переключение между Auth и Main стеком
+│   │   ├── AuthStack.tsx               # Экраны входа/регистрации
+│   │   └── MainTabs.tsx                # Нижнее меню (U.01.02): Профиль, План, Дневник, Рецепты, Поиск
+│   │
+│   ├── screens/                        # Экраны (View слой в MVVM)
+│   │   ├── Auth/
+│   │   │   ├── LoginScreen.tsx         # Вход по email+пароль (S.01)
+│   │   │   └── RegisterScreen.tsx      # Создание аккаунта (F.01.01)
+│   │   ├── Profile/
+│   │   │   ├── ProfileScreen.tsx       # Главный экран профиля
+│   │   │   ├── EditProfileScreen.tsx   # Изменение пола, возраста, веса, цели (F.01.01)
+│   │   │   └── EducationScreen.tsx     # Раздел «Обучение» с материалами (F.01.05, F.01.06, U.01.07)
+│   │   ├── Calculator/
+│   │   │   ├── CalculatorScreen.tsx    # Ввод данных для расчёта КБЖУ (F.01.01)
+│   │   │   ├── NormsScreen.tsx         # Отображение рассчитанных норм (F.01.02)
+│   │   │   └── HowCalculatedModal.tsx  # Пояснение расчёта по кнопке «Как рассчитано?» (F.01.04, U.01.06)
+│   │   ├── Plan/
+│   │   │   ├── PlanScreen.tsx          # Недельный план питания (F.02.01)
+│   │   │   ├── EditPlanScreen.tsx      # Замена блюд и порций (F.02.03, F.02.04)
+│   │   │   └── PlanSettingsScreen.tsx  # Настройки генерации (любимые/нелюбимые продукты) (F.02.02)
+│   │   ├── Diary/
+│   │   │   ├── DiaryScreen.tsx         # Дневник питания с графиками (F.03.01, U.01.03)
+│   │   │   └── AddToDiaryScreen.tsx    # Ввод веса продукта (F.03.02, U.01.05)
+│   │   ├── Recipes/
+│   │   │   ├── CreateRecipeScreen.tsx  # Создание рецепта: состав и описание (F.04.01)
+│   │   │   ├── RecipeDetailsScreen.tsx # Просмотр рецепта и его КБЖУ (F.04.02)
+│   │   │   └── MyRecipesScreen.tsx     # Личная библиотека рецептов (F.04.03)
+│   │   ├── Products/
+│   │   │   ├── AddProductScreen.tsx    # Добавление своего ингредиента (F.05.01)
+│   │   │   └── ScannerScreen.tsx       # Сканирование штрих-кода (из ВИ 8)
+│   │   └── Search/
+│   │       ├── SearchScreen.tsx        # Общий поиск (F.06.01)
+│   │       └── FiltersModal.tsx        # Фильтры по калориям и макронутриентам
+│   │
+│   ├── components/                     # Переиспользуемые UI-компоненты
+│   │   ├── ui/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── NumericKeyboard.tsx     # Быстрый ввод веса (U.01.05)
+│   │   │   └── Card.tsx                # Карточки блюд для замены (U.01.04)
+│   │   ├── charts/
+│   │   │   ├── ProgressBar.tsx         # Цветные прогресс-бары КБЖУ (U.01.03)
+│   │   │   └── MacroChart.tsx          # График распределения БЖУ
+│   │   └── education/
+│   │       ├── ArticleCard.tsx         # Карточка статьи (U.01.09)
+│   │       └── ContextLink.tsx         # Иконка «?» или баннер на экранах (U.01.08)
+│   │
+│   ├── viewmodels/                     # Слой бизнес-логики (MVVM)
+│   │   ├── useAuthVM.ts                # Логика входа/регистрации
+│   │   ├── useProfileVM.ts             # IProfileData (с диаграммы)
+│   │   ├── useCalculatorVM.ts          # ICalc (расчёт по Миффлину-Сан-Жеору)
+│   │   ├── usePlanVM.ts                # IPlanGen (генерация меню)
+│   │   ├── useDiaryVM.ts               # IDiary (работа с дневником)
+│   │   ├── useRecipeVM.ts              # ICreateRecipe (создание рецептов)
+│   │   ├── useProductVM.ts             # IFoodDB (добавление ингредиентов)
+│   │   └── useSearchVM.ts              # ISearch (поиск и фильтрация)
+│   │
+│   ├── database/                       # Локальная БД WatermelonDB
+│   │   ├── index.ts                    # Инициализация базы данных
+│   │   ├── schema.ts                   # Схема таблиц (products, recipes, diary, profile)
+│   │   ├── models/
+│   │   │   ├── ProfileModel.ts         # Модель пользователя
+│   │   │   ├── FoodModel.ts            # Модель продукта (IFoodDB)
+│   │   │   ├── RecipeModel.ts          # Модель рецепта (IRecipeDB)
+│   │   │   └── DiaryEntryModel.ts      # Запись в дневнике
+│   │   ├── migrations/
+│   │   │   └── index.ts                # Миграции схемы БД
+│   │   └── sync/
+│   │       └── sync.ts                 # Логика синхронизации с Supabase (RL.02, S.03)
+│   │
+│   ├── services/                       # Внешние сервисы и API
+│   │   ├── api/
+│   │   │   ├── client.ts               # Настройка axios/fetch
+│   │   │   ├── authApi.ts              # Запросы к /auth
+│   │   │   ├── syncApi.ts              # Запросы к /sync
+│   │   │   └── socialApi.ts            # Запросы к /social (публикация рецептов)
+│   │   ├── auth/
+│   │   │   └── tokenService.ts         # Хранение JWT-токенов
+│   │   └── calculations/
+│   │       ├── MifflinSanJeor.ts       # Формула расчёта калорий (F.01.02)
+│   │       ├── MacroCalculator.ts      # Расчёт БЖУ и микронутриентов
+│   │       └── RecipeCalculator.ts     # Пересчёт КБЖУ рецепта (F.04.02)
+│   │
+│   ├── utils/
+│   │   ├── validators.ts               # Валидация ввода (из п. 9.2)
+│   │   └── formatters.ts               # Форматирование чисел и дат
+│   │
+│   ├── constants/
+│   │   ├── nutrients.ts                # Справочники витаминов и минералов (F.01.02)
+│   │   ├── educationData.ts            # Локальный контент для статей (ТС-09)
+│   │   └── theme.ts                    # Цвета, шрифты, отступы
+│   │
+│   └── assets/
+│       ├── icons/                      # Иконки
+│       └── images/                     # Изображения
+│
+├── __tests__/                          # Тесты (п. 7.1 ТЗ)
+│   ├── unit/
+│   │   ├── MifflinSanJeor.test.ts      # ТС-01: Проверка расчёта калорий
+│   │   └── RecipeCalculator.test.ts    # ТС-04: Проверка расчёта рецепта
+│   └── integration/
+│       └── DiaryFlow.test.ts           # ТС-03: Добавление продукта в дневник
+│
+├── package.json
+├── tsconfig.json
+├── babel.config.js
+└── metro.config.js

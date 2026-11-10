@@ -1,0 +1,13 @@
+shared/
+├── types/
+│   ├── models.ts                       # Типы: Food, Recipe, DiaryEntry, Profile
+│   ├── interfaces.ts                   # Интерфейсы с диаграммы: IProfileData, ICalc, IPlanGen, IDiary, ISearch, ICreateRecipe
+│   ├── dto.ts                          # Data Transfer Objects для API
+│   └── enums.ts                        # Цели (похудение/набор/поддержание), Уровни активности, Типы диет
+│
+├── constants/
+│   ├── nutrients.ts                    # Справочные нормы витаминов и минералов
+│   └── formulas.ts                     # Коэффициенты для расчёта КБЖУ
+│
+├── package.json
+└── tsconfig.json
