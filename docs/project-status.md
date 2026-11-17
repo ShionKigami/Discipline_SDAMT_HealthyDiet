@@ -18,3 +18,43 @@
 •	Разработка модуля профиля и расчёта КБЖУ
 •	Реализация начального пользовательского сценария
 
+Этапы проекта
+Этап 1: Каркас проекта и конфигурация
+Цель: создать структуру директорий и файлов согласно tree-файлам, настроить workspace, TypeScript, линтеры, базовые конфиги.
+Создаваемые/изменяемые файлы: корневой package.json, tsconfig.json, mobile/package.json, mobile/tsconfig.json, mobile/babel.config.js, mobile/metro.config.js, backend/package.json, backend/tsconfig.json, shared/package.json, shared/tsconfig.json, shared/types/*.ts (заглушки), .gitignore.
+Зависимости: нет.
+Критерии готовности: проект собирается, yarn install проходит, tsc --noEmit без ошибок.
+Покрываемые требования: NFR-009, NFR-010, NFR-011 (частично).
+Строки матрицы: FR-021, NFR-009, NFR-010, NFR-011.
+
+Этап 2: Доменная модель и БД
+Цель: реализовать схемы WatermelonDB (mobile), Prisma (backend), типы shared.
+Файлы: mobile/src/database/schema.ts, модели (ProfileModel, FoodModel, RecipeModel, DiaryEntryModel + предложенные), backend/prisma/schema.prisma, backend/src/models/*, shared/types/models.ts, shared/types/enums.ts, shared/types/interfaces.ts, shared/types/dto.ts.
+Зависимости: Этап 1.
+Критерии готовности: миграции применяются, модели соответствуют сущностям (после подтверждения Q-002).
+Покрываемые требования: FR-001, FR-002, FR-007, FR-011, FR-014, FR-017, NFR-004, NFR-008.
+Строки матрицы: FR-001, FR-002, FR-007, FR-011, FR-014, FR-017, NFR-004, NFR-008.
+
+Этап 3: Бизнес-логика и API
+Цель: реализовать расчёты (MifflinSanJeor, MacroCalculator, RecipeCalculator), сервисы, контроллеры, маршруты, viewmodels.
+Файлы: mobile/src/services/calculations/*, mobile/src/viewmodels/*, backend/src/controllers/*, backend/src/services/*, backend/src/routes/*, backend/src/middleware/*, backend/src/index.ts, mobile/src/services/api/*, mobile/src/services/auth/tokenService.ts.
+Зависимости: Этап 2.
+Критерии готовности: unit-тесты для расчётов, API отвечает на запросы, viewmodels покрыты тестами.
+Покрываемые требования: FR-002–FR-020, NFR-001–NFR-003, NFR-006, NFR-007.
+Строки матрицы: соответствующие FR и NFR.
+
+Этап 4: UI/интеграции
+Цель: реализовать экраны, навигацию, компоненты, провайдеры, синхронизацию.
+Файлы: mobile/src/app/*, mobile/src/navigation/*, mobile/src/screens/*, mobile/src/components/*, mobile/src/database/sync/sync.ts, mobile/src/utils/*, mobile/src/constants/*, mobile/src/assets/*.
+Зависимости: Этап 3.
+Критерии готовности: приложение запускается, основные сценарии работают, UI соответствует U-требованиям.
+Покрываемые требования: FR-021–FR-029, NFR-005.
+Строки матрицы: FR-021–FR-029, NFR-005.
+
+Этап 5: Тесты и документация
+Цель: написать unit, integration тесты, документацию.
+Файлы: mobile/__tests__/unit/*, mobile/__tests__/integration/*, docs/*.
+Зависимости: Этапы 1–4.
+Критерии готовности: тесты проходят, документация описывает запуск и архитектуру.
+Покрываемые требования: все.
+Строки матрицы: все.
