@@ -1,0 +1,6 @@
+smart-nutrition/
+├── mobile/                     # Клиентское приложение (React Native + TS)
+├── backend/                    # Серверная часть (Node.js) для синхронизации и соц. ленты
+├── shared/                     # Общие типы данных и интерфейсы
+├── docs/                       # Документация проекта (ТЗ, схемы БД, API)
+└── package.json                # Корневой конфиг (Yarn/NPM Workspaces)
