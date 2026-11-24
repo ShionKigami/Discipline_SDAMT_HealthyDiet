@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, StyleSheet, TextInput } from 'react-native';
 import { useRecipeVM } from '../../viewmodels/useRecipeVM';
 import { Button } from '../../components/ui/Button';
 
 export const CreateRecipeScreen = () => {
-  const { drafts, addIngredient, saveRecipe, clearDraft } = useRecipeVM();
+  const { drafts, addIngredient, saveRecipe, publishRecipe, clearDraft, isPublishing } = useRecipeVM();
   const [name, setName] = useState('');
   const [steps, setSteps] = useState('');
   const [totalWeight, setTotalWeight] = useState('500');
@@ -20,9 +20,38 @@ export const CreateRecipeScreen = () => {
       <Text style={styles.label}>Состав:</Text>
       {drafts.map((d, i) => <Text key={i}>• {d.name} ({d.weight}г)</Text>)}
       <Button title="+ Добавить ингредиент" variant="secondary" onPress={handleAddMock} />
-      <TextInput placeholder="Шаги приготовления" style={[styles.input, {height: 100}]} multiline value={steps} onChangeText={setSteps} />
-      <TextInput placeholder="Выход блюда (г)" style={styles.input} keyboardType="numeric" value={totalWeight} onChangeText={setTotalWeight} />
-      <Button title="Сохранить" onPress={async () => { await saveRecipe(name, steps, Number(totalWeight)); clearDraft(); }} />
+      <TextInput
+        placeholder="Шаги приготовления"
+        style={[styles.input, { height: 100 }]}
+        multiline
+        value={steps}
+        onChangeText={setSteps}
+      />
+      <TextInput
+        placeholder="Выход блюда (г)"
+        style={styles.input}
+        keyboardType="numeric"
+        value={totalWeight}
+        onChangeText={setTotalWeight}
+      />
+
+      {/* ВИ 5, шаг 10: сохранить в «Мои рецепты» */}
+      <Button
+        title="Сохранить в мои рецепты"
+        onPress={async () => {
+          await saveRecipe(name, steps, Number(totalWeight));
+        }}
+      />
+
+      {/* ВИ 5, шаг 10: опубликовать в общую базу */}
+      <Button
+        title="Опубликовать в общей базе"
+        variant="secondary"
+        isLoading={isPublishing}
+        onPress={async () => {
+          await publishRecipe(name, steps, Number(totalWeight));
+        }}
+      />
     </ScrollView>
   );
 };
